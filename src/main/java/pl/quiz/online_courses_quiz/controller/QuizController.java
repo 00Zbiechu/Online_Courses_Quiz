@@ -7,60 +7,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.quiz.online_courses_quiz.model.dto.QuestionFormDTO;
-import pl.quiz.online_courses_quiz.model.entity.ResultEntity;
 import pl.quiz.online_courses_quiz.service.QuizService;
-
-import java.util.List;
+import pl.quiz.online_courses_quiz.user.CurrentUser;
 
 @Controller
 @RequiredArgsConstructor
 public class QuizController {
 
     private final QuizService quizService;
-    Boolean submitted = false;
-
-    @ModelAttribute("result")
-    public ResultEntity getResult() {
-        return new ResultEntity();
-    }
 
     @GetMapping("/")
-    public String home() {
+    public String home(@RequestParam String courseTitle, @RequestParam String username, Model model) {
+        quizService.setUserData(courseTitle, username);
+        model.addAttribute("courseTitle", CurrentUser.getInstance().getCourseTitle());
+        model.addAttribute("username", CurrentUser.getInstance().getUsername());
         return "index.html";
     }
 
     @PostMapping("/quiz")
-    public String quiz(@RequestParam String username, Model model, RedirectAttributes redirectAttributes) {
-        if (username.isEmpty()) {
-            redirectAttributes.addFlashAttribute("warning", "You must enter your name");
-            return "redirect:/";
-        }
-
-        submitted = false;
-        getResult().setUsername(username);
-
-        QuestionFormDTO qForm = quizService.getQuestions();
-        model.addAttribute("qForm", qForm);
-
+    public String quiz(Model model) {
+        model.addAttribute("questionForm", quizService.getQuestionsForLoggedUserAndCourseTitle());
         return "quiz.html";
     }
 
     @PostMapping("/submit")
-    public String submit(@ModelAttribute QuestionFormDTO questionFormDTO) {
-        if (!submitted) {
-            getResult().setTotalCorrect(quizService.getResult(questionFormDTO));
-            quizService.saveScore(getResult());
-            submitted = true;
-        }
+    public String submit(@ModelAttribute QuestionFormDTO questionFormDTO, Model model) {
+        CurrentUser.getInstance().setTotalCorrectPoints(quizService.getResult(questionFormDTO));
+        quizService.saveQuizResult(CurrentUser.getInstance());
+        model.addAttribute("result", CurrentUser.getInstance());
         return "result.html";
-    }
-
-    @GetMapping("/score")
-    public String score(Model m) {
-        List<ResultEntity> sList = quizService.getTopScore();
-        m.addAttribute("sList", sList);
-        return "scoreboard.html";
     }
 }

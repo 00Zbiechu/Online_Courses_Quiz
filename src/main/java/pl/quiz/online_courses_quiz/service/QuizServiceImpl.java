@@ -1,17 +1,19 @@
 package pl.quiz.online_courses_quiz.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
+import org.apache.commons.math3.random.RandomDataGenerator;
 import org.springframework.stereotype.Service;
+import pl.quiz.online_courses_quiz.mapper.QuestionMapper;
+import pl.quiz.online_courses_quiz.model.dto.QuestionDTO;
 import pl.quiz.online_courses_quiz.model.dto.QuestionFormDTO;
 import pl.quiz.online_courses_quiz.model.entity.QuestionEntity;
-import pl.quiz.online_courses_quiz.model.entity.ResultEntity;
+import pl.quiz.online_courses_quiz.model.entity.QuizUserEntity;
 import pl.quiz.online_courses_quiz.repository.QuestionRepository;
 import pl.quiz.online_courses_quiz.repository.ResultRepository;
+import pl.quiz.online_courses_quiz.user.CurrentUser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -21,39 +23,45 @@ public class QuizServiceImpl implements QuizService {
 
     private final ResultRepository resultRepository;
 
-    public QuestionFormDTO getQuestions() {
-        List<QuestionEntity> allQuestions = questionRepository.findAll();
-        List<QuestionEntity> questionList = new ArrayList<>();
+    private final QuestionMapper questionMapper;
+    private final RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
 
-        Random random = new Random();
+    @Override
+    public void setUserData(String courseTitle, String username) {
+        CurrentUser.getInstance().setCourseTitle(courseTitle);
+        CurrentUser.getInstance().setUsername(username);
+    }
+
+    @Override
+    public QuestionFormDTO getQuestionsForLoggedUserAndCourseTitle() {
+        List<QuestionEntity> allQuestions = questionRepository.findAllByCourseTitle(CurrentUser.getInstance().getCourseTitle());
+        List<QuestionDTO> questionList = new ArrayList<>();
+
+        //TODO: Send to error page when question list is empty
 
         for (int i = 0; i < 5; i++) {
-            int rand = random.nextInt(allQuestions.size());
-            questionList.add(allQuestions.get(rand));
+            int rand = randomDataGenerator.nextInt(0, allQuestions.size() - 1);
+            questionList.add(questionMapper.toDTO(allQuestions.get(rand)));
             allQuestions.remove(rand);
         }
 
         return QuestionFormDTO.builder().questionList(questionList).build();
     }
 
+    @Override
     public int getResult(QuestionFormDTO questionFormDTO) {
-
         int correct = 0;
 
-        for (QuestionEntity question : questionFormDTO.getQuestionList())
-            if (question.getAns() == question.getChose())
+        for (QuestionDTO question : questionFormDTO.getQuestionList())
+            if (question.getAnswer() == question.getChoice()) {
                 correct++;
+            }
 
         return correct;
     }
 
-    public void saveScore(ResultEntity resultEntity) {
-        resultEntity.setUsername(resultEntity.getUsername());
-        resultEntity.setTotalCorrect(resultEntity.getTotalCorrect());
-        resultRepository.save(resultEntity);
-    }
-
-    public List<ResultEntity> getTopScore() {
-        return resultRepository.findAll(Sort.by(Sort.Direction.DESC, "totalCorrect"));
+    @Override
+    public void saveQuizResult(QuizUserEntity quizUserEntity) {
+        resultRepository.save(quizUserEntity);
     }
 }

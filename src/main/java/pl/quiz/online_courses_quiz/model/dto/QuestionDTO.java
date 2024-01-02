@@ -5,16 +5,25 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.quiz.online_courses_quiz.model.entity.QuestionEntity;
-
-import java.util.List;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionFormDTO {
+public class QuestionDTO {
 
-    private List<QuestionDTO> questionList;
+    private String title;
+
+    private String optionA;
+
+    private String optionB;
+
+    private String optionC;
+
+    private int answer;
+
+    private int choice;
+
+    private String courseTitle;
 }

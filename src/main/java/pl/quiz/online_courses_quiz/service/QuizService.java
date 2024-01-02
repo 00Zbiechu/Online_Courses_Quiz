@@ -1,17 +1,15 @@
 package pl.quiz.online_courses_quiz.service;
 
 import pl.quiz.online_courses_quiz.model.dto.QuestionFormDTO;
-import pl.quiz.online_courses_quiz.model.entity.ResultEntity;
-
-import java.util.List;
+import pl.quiz.online_courses_quiz.model.entity.QuizUserEntity;
 
 public interface QuizService {
 
-    QuestionFormDTO getQuestions();
+    void setUserData(String courseTitle, String username);
+
+    QuestionFormDTO getQuestionsForLoggedUserAndCourseTitle();
 
     int getResult(QuestionFormDTO questionFormDTO);
 
-    void saveScore(ResultEntity resultEntity);
-
-    List<ResultEntity> getTopScore();
+    void saveQuizResult(QuizUserEntity quizUserEntity);
 }

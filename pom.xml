@@ -16,19 +16,19 @@
 		<java.version>17</java.version>
 		<maven.compiler.plugin>3.11.0</maven.compiler.plugin>
 		<spring.boot.starter>3.1.5</spring.boot.starter>
-		<spring.security>6.1.5</spring.security>
 		<hibernate.validator>8.0.1.Final</hibernate.validator>
 		<postgresql>42.6.0</postgresql>
-		<json.web.token>0.11.5</json.web.token>
+		<h2.version>2.2.224</h2.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-		<querydsl>5.0.0</querydsl>
 		<lombok>1.18.30</lombok>
 		<lombok.mapstruct.binding>0.2.0</lombok.mapstruct.binding>
 		<liquibase>4.24.0</liquibase>
 		<vavr>0.10.4</vavr>
 		<guava>32.1.2-jre</guava>
+		<apache.commons.version>3.6.1</apache.commons.version>
 	</properties>
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -38,6 +38,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${spring.boot.starter}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 			<version>${spring.boot.starter}</version>
 		</dependency>
 
@@ -55,25 +61,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<version>${spring.security}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-			<version>${spring.boot.starter}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring.security}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate.validator}</version>
@@ -83,6 +70,13 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -99,29 +93,11 @@
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>${liquibase}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-			<version>${json.web.token}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-impl</artifactId>
-			<version>${json.web.token}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId>
-			<version>${json.web.token}</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.liquibase</groupId>-->
+<!--			<artifactId>liquibase-core</artifactId>-->
+<!--			<version>${liquibase}</version>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>io.vavr</groupId>
@@ -136,18 +112,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.querydsl</groupId>
-			<artifactId>querydsl-apt</artifactId>
-			<version>${querydsl}</version>
-			<classifier>jakarta</classifier>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.querydsl</groupId>
-			<artifactId>querydsl-jpa</artifactId>
-			<classifier>jakarta</classifier>
-			<version>${querydsl}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>${apache.commons.version}</version>
 		</dependency>
 
 	</dependencies>

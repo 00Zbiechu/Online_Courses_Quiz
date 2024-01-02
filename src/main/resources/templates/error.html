@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/index.css}">
-    <title>Home Page</title>
+    <title>Error Page</title>
 </head>
 <body>
 
@@ -19,11 +19,14 @@
     </div>
     <div class="text-box">
         <h1 class="mb-5 text-center">Online Courses Test App</h1>
-        <form class="card bg-dark py-5 px-4" action="/quiz" method="POST">
-            <input id="username" th:value="${username}" type="text" disabled>
-            <input id="courseTitle" th:value="${courseTitle}" type="text" disabled>
-            <button type="submit" class="btn btn-warning">Start Quiz</button>
-        </form>
+        <div class="card bg-dark py-5 px-4 d-flex justify-content-center flex-column">
+            <p>There seems to be a problem with the page you requested (<span th:text="${path}"></span>).</p>
+            <p th:text="${'The status code is ' + error + '.'}"></p>
+            <p th:text="${'Further details: ' + message + '.'}"></p>
+            <a href="http://localhost:9000">
+                <button type="submit" class="btn btn-warning">Back to the home page</button>
+            </a>
+        </div>
     </div>
 </div>
 
