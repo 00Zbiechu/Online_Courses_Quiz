@@ -13,6 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class QuestionDTO {
 
+    private Long id;
+
     private String title;
 
     private String optionA;

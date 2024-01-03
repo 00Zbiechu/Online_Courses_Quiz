@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import pl.quiz.online_courses_quiz.model.entity.QuizUserEntity;
+import pl.quiz.online_courses_quiz.model.dto.QuizUserDTO;
 
 @Component
 @Getter
@@ -14,14 +14,14 @@ import pl.quiz.online_courses_quiz.model.entity.QuizUserEntity;
 @Builder
 public class CurrentUser {
 
-    public static QuizUserEntity INSTANCE;
+    public static QuizUserDTO INSTANCE;
 
     private CurrentUser() {
     }
 
-    public static QuizUserEntity getInstance() {
+    public static QuizUserDTO getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new QuizUserEntity();
+            INSTANCE = new QuizUserDTO();
         }
 
         return INSTANCE;

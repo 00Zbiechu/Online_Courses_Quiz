@@ -22,7 +22,10 @@ public class QuizUserEntity extends BaseEntity {
     private String username;
 
     @Column(nullable = false)
-    private int totalCorrectPoints = 0;
+    private int correctAnswer = 0;
+
+    @Column(nullable = false)
+    private int wrongAnswer = 0;
 
     @Column(length = 30, nullable = false)
     private String courseTitle;

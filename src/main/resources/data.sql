@@ -1,4 +1,4 @@
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (1,
         'What is a correct syntax to output "Hello World" in Java?',
         'echo "Hello World"',
@@ -9,7 +9,7 @@ values (1,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (2,
         'Java is short for "JavaScript."',
         'True',
@@ -20,7 +20,7 @@ values (2,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (3,
         'How do you insert COMMENTS in Java code?',
         '# This is a comment',
@@ -31,7 +31,7 @@ values (3,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (4,
         'Which data type is used to create a variable that should store text?',
         'String',
@@ -42,7 +42,7 @@ values (4,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (5,
         'How do you create a variable with the numeric value 5?',
         'num x = 5',
@@ -53,7 +53,7 @@ values (5,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (6,
         'How do you create a variable with the floating number 2.8?',
         'num x = 2.8',
@@ -64,7 +64,7 @@ values (6,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (7,
         'Which method can be used to find the length of a string?',
         'getSize()',
@@ -75,7 +75,7 @@ values (7,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (8,
         'Which operator is used to add together two values?',
         '&&',
@@ -86,7 +86,7 @@ values (8,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (9,
         'The value of a string variable can be surrounded by single quotes.',
         'True',
@@ -97,7 +97,7 @@ values (9,
         'KursTestowy')
 ;
 
-insert into Question(id, title, optionA, optionB, optionC, answer, choice, Course_Title)
+insert into Question(id, title, option_a, option_b, option_c, answer, choice, Course_Title)
 values (10,
         'Which operator can be used to compare two values?',
         '><',

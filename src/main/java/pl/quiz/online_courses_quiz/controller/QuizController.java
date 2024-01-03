@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.quiz.online_courses_quiz.model.dto.QuestionFormDTO;
 import pl.quiz.online_courses_quiz.service.QuizService;
-import pl.quiz.online_courses_quiz.user.CurrentUser;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,10 +17,8 @@ public class QuizController {
     private final QuizService quizService;
 
     @GetMapping("/")
-    public String home(@RequestParam String courseTitle, @RequestParam String username, Model model) {
+    public String home(@RequestParam String courseTitle, @RequestParam String username) {
         quizService.setUserData(courseTitle, username);
-        model.addAttribute("courseTitle", CurrentUser.getInstance().getCourseTitle());
-        model.addAttribute("username", CurrentUser.getInstance().getUsername());
         return "index.html";
     }
 
@@ -33,9 +30,8 @@ public class QuizController {
 
     @PostMapping("/submit")
     public String submit(@ModelAttribute QuestionFormDTO questionFormDTO, Model model) {
-        CurrentUser.getInstance().setTotalCorrectPoints(quizService.getResult(questionFormDTO));
-        quizService.saveQuizResult(CurrentUser.getInstance());
-        model.addAttribute("result", CurrentUser.getInstance());
+        var currentUser = quizService.saveQuizResult(questionFormDTO);
+        model.addAttribute("result", currentUser);
         return "result.html";
     }
 }

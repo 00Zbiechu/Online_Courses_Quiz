@@ -21,13 +21,13 @@ public class QuestionEntity extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "option_a")
     private String optionA;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "option_b")
     private String optionB;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "option_c")
     private String optionC;
 
     @Column(nullable = false)
