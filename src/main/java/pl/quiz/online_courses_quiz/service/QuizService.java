@@ -1,13 +1,13 @@
 package pl.quiz.online_courses_quiz.service;
 
-import pl.quiz.online_courses_quiz.model.dto.QuestionFormDTO;
-import pl.quiz.online_courses_quiz.model.entity.QuizUserDocument;
+import pl.quiz.online_courses_quiz.model.dto.QuizUserDTO;
+import pl.quiz.online_courses_quiz.model.dto.wrapper.QuestionsFormDTO;
 
 public interface QuizService {
 
     void setUserData(String courseTitle, String username);
 
-    QuestionFormDTO getQuestionsForLoggedUserAndCourseTitle();
+    QuestionsFormDTO getQuestionsForLoggedUserAndCourseTitle();
 
-    QuizUserDocument saveQuizResult(QuestionFormDTO questionFormDTO);
+    QuizUserDTO saveQuizResult(QuestionsFormDTO questionsFormDTO);
 }

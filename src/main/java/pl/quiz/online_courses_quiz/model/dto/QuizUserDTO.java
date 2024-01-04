@@ -1,17 +1,23 @@
 package pl.quiz.online_courses_quiz.model.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionFormDTO extends QuestionDTO {
+public class QuizUserDTO {
 
-    private int choice;
+    private String username;
+
+    private int correctAnswer = 0;
+
+    private int wrongAnswer = 0;
+
+    private String courseTitle;
 }

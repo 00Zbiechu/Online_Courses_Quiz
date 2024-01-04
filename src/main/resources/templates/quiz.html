@@ -17,28 +17,28 @@
     <h1 class="bg-danger text-light">Only Select The Correct Answers</h1>
 
     <form action="submit" method="POST" th:object=${questionForm}>
-        <div class="ques-box bg-dark text-light" th:each="ques, i: ${questionForm.questionDocumentList}">
+        <div class="ques-box bg-dark text-light" th:each="ques, i: ${questionForm.questionFormList}">
             <p class="title" th:text="${ques.title}"></p>
 
             <div class="option">
-                <input type="radio" th:name="|questionDocumentList[${i.index}].choice|" th:value="1"/>
+                <input type="radio" th:name="|questionFormList[${i.index}].choice|" th:value="1"/>
                 <p th:text="${ques.optionA}"></p>
             </div>
 
             <div class="option">
-                <input type="radio" th:name="|questionDocumentList[${i.index}].choice|" th:value="2"/>
+                <input type="radio" th:name="|questionFormList[${i.index}].choice|" th:value="2"/>
                 <p th:text="${ques.optionB}"></p>
             </div>
 
             <div class="option">
-                <input type="radio" th:name="|questionDocumentList[${i.index}].choice|" th:value="3"/>
+                <input type="radio" th:name="|questionFormList[${i.index}].choice|" th:value="3"/>
                 <p th:text="${ques.optionC}"></p>
             </div>
 
-            <input type="hidden" th:name="|questionDocumentList[${i.index}].id|" th:value="${ques.id}"/>
-            <input type="hidden" th:name="|questionDocumentList[${i.index}].title|" th:value="${ques.title}"/>
-            <input type="hidden" th:name="|questionDocumentList[${i.index}].answer|" th:value="${ques.answer}"/>
-            <input type="hidden" th:name="|questionDocumentList[${i.index}].courseTitle|"
+            <input type="hidden" th:name="|questionFormList[${i.index}].id|" th:value="${ques.id}"/>
+            <input type="hidden" th:name="|questionFormList[${i.index}].title|" th:value="${ques.title}"/>
+            <input type="hidden" th:name="|questionFormList[${i.index}].answer|" th:value="${ques.answer}"/>
+            <input type="hidden" th:name="|questionFormList[${i.index}].courseTitle|"
                    th:value="${ques.courseTitle}"/>
         </div>
 

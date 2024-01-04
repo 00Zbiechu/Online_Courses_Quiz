@@ -25,7 +25,5 @@ public class QuestionDocument extends BaseDocument {
 
     private int answer;
 
-    private int choice;
-
     private String courseTitle;
 }
