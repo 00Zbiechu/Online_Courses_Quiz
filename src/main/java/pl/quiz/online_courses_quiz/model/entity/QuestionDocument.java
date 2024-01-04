@@ -1,19 +1,19 @@
-package pl.quiz.online_courses_quiz.model.dto;
+package pl.quiz.online_courses_quiz.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document("question")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionDTO {
-
-    private Long id;
+public class QuestionDocument extends BaseDocument {
 
     private String title;
 

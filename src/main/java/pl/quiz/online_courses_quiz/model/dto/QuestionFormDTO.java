@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.quiz.online_courses_quiz.model.entity.QuestionDocument;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ import java.util.List;
 @NoArgsConstructor
 public class QuestionFormDTO {
 
-    private List<QuestionDTO> questionList;
+    private List<QuestionDocument> questionDocumentList;
 }

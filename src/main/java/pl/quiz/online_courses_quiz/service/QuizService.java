@@ -1,7 +1,7 @@
 package pl.quiz.online_courses_quiz.service;
 
 import pl.quiz.online_courses_quiz.model.dto.QuestionFormDTO;
-import pl.quiz.online_courses_quiz.model.dto.QuizUserDTO;
+import pl.quiz.online_courses_quiz.model.entity.QuizUserDocument;
 
 public interface QuizService {
 
@@ -9,5 +9,5 @@ public interface QuizService {
 
     QuestionFormDTO getQuestionsForLoggedUserAndCourseTitle();
 
-    QuizUserDTO saveQuizResult(QuestionFormDTO questionFormDTO);
+    QuizUserDocument saveQuizResult(QuestionFormDTO questionFormDTO);
 }

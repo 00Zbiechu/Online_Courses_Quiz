@@ -6,13 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import pl.quiz.online_courses_quiz.exception.CustomErrorException;
 import pl.quiz.online_courses_quiz.exception.errors.ErrorCodes;
-import pl.quiz.online_courses_quiz.mapper.QuestionMapper;
-import pl.quiz.online_courses_quiz.mapper.QuizUserMapper;
-import pl.quiz.online_courses_quiz.model.dto.QuestionDTO;
 import pl.quiz.online_courses_quiz.model.dto.QuestionFormDTO;
 import pl.quiz.online_courses_quiz.model.dto.QuizResultDTO;
-import pl.quiz.online_courses_quiz.model.dto.QuizUserDTO;
-import pl.quiz.online_courses_quiz.model.entity.QuestionEntity;
+import pl.quiz.online_courses_quiz.model.entity.QuestionDocument;
+import pl.quiz.online_courses_quiz.model.entity.QuizUserDocument;
 import pl.quiz.online_courses_quiz.repository.QuestionRepository;
 import pl.quiz.online_courses_quiz.repository.QuizUserRepository;
 import pl.quiz.online_courses_quiz.user.CurrentUser;
@@ -28,10 +25,6 @@ public class QuizServiceImpl implements QuizService {
 
     private final QuizUserRepository quizUserRepository;
 
-    private final QuestionMapper questionMapper;
-
-    private final QuizUserMapper quizUserMapper;
-
     private final QuizUserValidator quizUserValidator;
 
     private final HttpSession session;
@@ -45,46 +38,56 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public QuestionFormDTO getQuestionsForLoggedUserAndCourseTitle() {
-        List<QuestionEntity> questionEntityList = questionRepository.findAllByCourseTitle(session.getAttribute("courseTitle").toString());
+        validateIsUsernameOrCourseTitleIsNotNull();
+        List<QuestionDocument> questionDocumentList = questionRepository.findAllByCourseTitle(session.getAttribute("courseTitle").toString());
 
-        if (questionEntityList.isEmpty()) {
+        if (questionDocumentList.isEmpty()) {
             throw new CustomErrorException("questions", ErrorCodes.ENTITY_DOES_NOT_EXIST, HttpStatus.NOT_FOUND);
         }
 
-        return QuestionFormDTO.builder().questionList(questionEntityList.stream().map(questionMapper::toDTO).toList()).build();
+        return QuestionFormDTO.builder().questionDocumentList(questionDocumentList).build();
     }
 
     @Override
-    public QuizUserDTO saveQuizResult(QuestionFormDTO questionFormDTO) {
+    public QuizUserDocument saveQuizResult(QuestionFormDTO questionFormDTO) {
         var quizResult = getResult(questionFormDTO);
         var currentUser = CurrentUser.getInstance();
 
+        validateIsUsernameOrCourseTitleIsNotNull();
         currentUser.setUsername(session.getAttribute("username").toString());
         currentUser.setCourseTitle(session.getAttribute("courseTitle").toString());
         currentUser.setCorrectAnswer(quizResult.getCorrectAnswer());
         currentUser.setWrongAnswer(quizResult.getWrongAnswer());
 
         quizUserRepository.findByUsernameAndCourseTitle(currentUser.getUsername(), currentUser.getCourseTitle()).ifPresent(
-                quizUserEntity -> {
-                    throw new CustomErrorException("quizUserEntity", ErrorCodes.ENTITY_ALREADY_EXIST, HttpStatus.BAD_REQUEST);
+                quizUserDocumentEntity -> {
+                    throw new CustomErrorException("quizUserDocumentEntity", ErrorCodes.ENTITY_ALREADY_EXIST, HttpStatus.BAD_REQUEST);
                 }
         );
 
-        var result = quizUserRepository.save(quizUserMapper.toEntity(currentUser));
-        return quizUserMapper.toDTO(result);
+        return quizUserRepository.save(currentUser);
     }
 
     private QuizResultDTO getResult(QuestionFormDTO questionFormDTO) {
         int correct = 0;
         int wrong = 0;
 
-        for (QuestionDTO question : questionFormDTO.getQuestionList())
-            if (question.getAnswer() == question.getChoice()) {
+        for (QuestionDocument questionDocument : questionFormDTO.getQuestionDocumentList())
+            if (questionDocument.getAnswer() == questionDocument.getChoice()) {
                 correct++;
             } else {
                 wrong++;
             }
 
         return QuizResultDTO.builder().correctAnswer(correct).wrongAnswer(wrong).build();
+    }
+
+    private void validateIsUsernameOrCourseTitleIsNotNull() {
+        var username = session.getAttribute("username");
+        var courseTitle = session.getAttribute("courseTitle");
+
+        if (username == null || courseTitle == null) {
+            throw new CustomErrorException("sessionData", ErrorCodes.FIELD_REQUIRED, HttpStatus.BAD_REQUEST);
+        }
     }
 }
