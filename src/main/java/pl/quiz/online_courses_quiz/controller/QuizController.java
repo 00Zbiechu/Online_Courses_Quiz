@@ -6,7 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import pl.quiz.online_courses_quiz.model.dto.CourseTitleAndUsernameDTO;
 import pl.quiz.online_courses_quiz.model.dto.wrapper.QuestionsFormDTO;
 import pl.quiz.online_courses_quiz.service.QuizService;
 
@@ -17,8 +18,8 @@ public class QuizController {
     private final QuizService quizService;
 
     @GetMapping("/")
-    public String home(@RequestParam String courseTitle, @RequestParam String username) {
-        quizService.setUserData(courseTitle, username);
+    public String home(@RequestBody CourseTitleAndUsernameDTO courseTitleAndUsernameDTO) {
+        quizService.setUserData(courseTitleAndUsernameDTO);
         return "index.html";
     }
 

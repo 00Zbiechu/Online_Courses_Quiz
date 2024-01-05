@@ -11,4 +11,6 @@ public interface QuestionMapper {
     QuestionDTO toDTO(QuestionDocument questionDocument);
 
     QuestionFormDTO toQuestionFormDTO(QuestionDocument questionDocument);
+
+    QuestionDocument toDocument(QuestionDTO questionDTO);
 }

@@ -8,6 +8,7 @@ import pl.quiz.online_courses_quiz.exception.CustomErrorException;
 import pl.quiz.online_courses_quiz.exception.errors.ErrorCodes;
 import pl.quiz.online_courses_quiz.mapper.QuestionMapper;
 import pl.quiz.online_courses_quiz.mapper.QuizUserMapper;
+import pl.quiz.online_courses_quiz.model.dto.CourseTitleAndUsernameDTO;
 import pl.quiz.online_courses_quiz.model.dto.QuestionFormDTO;
 import pl.quiz.online_courses_quiz.model.dto.QuizResultDTO;
 import pl.quiz.online_courses_quiz.model.dto.QuizUserDTO;
@@ -36,10 +37,10 @@ public class QuizServiceImpl implements QuizService {
     private final HttpSession session;
 
     @Override
-    public void setUserData(String courseTitle, String username) {
-        quizUserValidator.validateQuizUserInstanceForSettingCurrentUser(username, courseTitle);
-        session.setAttribute("username", username);
-        session.setAttribute("courseTitle", courseTitle);
+    public void setUserData(CourseTitleAndUsernameDTO courseTitleAndUsernameDTO) {
+        quizUserValidator.validateQuizUserInstanceForSettingCurrentUser(courseTitleAndUsernameDTO.getUsername(), courseTitleAndUsernameDTO.getCourseTitle());
+        session.setAttribute("username", courseTitleAndUsernameDTO.getUsername());
+        session.setAttribute("courseTitle", courseTitleAndUsernameDTO.getCourseTitle());
     }
 
     @Override

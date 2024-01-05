@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import pl.quiz.online_courses_quiz.exception.CustomErrorException;
+import pl.quiz.online_courses_quiz.exception.ApiCustomErrorException;
 import pl.quiz.online_courses_quiz.exception.errors.ErrorCodes;
 import pl.quiz.online_courses_quiz.model.dto.QuestionDTO;
 import pl.quiz.online_courses_quiz.repository.QuestionRepository;
@@ -31,7 +31,7 @@ public class QuestionValidator implements Validator {
     private void validateIsTitleUnique(QuestionDTO dto) {
         questionRepository.findByCourseTitleAndTitle(dto.getCourseTitle(), dto.getTitle()).ifPresent(
                 questionDocument -> {
-                    throw new CustomErrorException("question", ErrorCodes.ENTITY_ALREADY_EXIST, HttpStatus.BAD_REQUEST);
+                    throw new ApiCustomErrorException("question", ErrorCodes.ENTITY_ALREADY_EXIST, HttpStatus.BAD_REQUEST);
                 }
         );
     }

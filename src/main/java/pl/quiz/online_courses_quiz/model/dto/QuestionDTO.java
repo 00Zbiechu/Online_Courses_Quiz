@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import static pl.quiz.online_courses_quiz.exception.errors.ErrorCodes.FIELD_REQUIRED;
 import static pl.quiz.online_courses_quiz.exception.errors.ErrorCodes.WRONG_FIELD_SIZE;
 
 @Getter
@@ -22,27 +23,28 @@ public class QuestionDTO {
 
     private String id;
 
-    @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     @Size(min = 20, max = 300, message = WRONG_FIELD_SIZE)
     private String title;
 
-    @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     @Size(min = 20, max = 200, message = WRONG_FIELD_SIZE)
     private String optionA;
 
-    @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     @Size(min = 20, max = 200, message = WRONG_FIELD_SIZE)
     private String optionB;
 
-    @NotBlank
+    @NotBlank(message = FIELD_REQUIRED)
     @Size(min = 20, max = 200, message = WRONG_FIELD_SIZE)
     private String optionC;
 
-    @NotNull
-    @Min(1)
-    @Max(3)
+    @NotNull(message = FIELD_REQUIRED)
+    @Min(value = 1, message = WRONG_FIELD_SIZE)
+    @Max(value = 3, message = WRONG_FIELD_SIZE)
     private int answer;
 
+    @NotBlank(message = FIELD_REQUIRED)
     @Size(min = 3, max = 30, message = WRONG_FIELD_SIZE)
     private String courseTitle;
 }

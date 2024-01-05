@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.quiz.online_courses_quiz.exception.model.ErrorDTO;
@@ -25,12 +24,10 @@ public class GlobalExceptionHandler {
         return "error.html";
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public String handleMissingServletRequestParameterException(MissingServletRequestParameterException ex, Model model) {
-        model.addAttribute("errorStatus", HttpStatus.BAD_REQUEST);
-        model.addAttribute("field", ex.getParameterName());
-        model.addAttribute("errorCode", ex.getMessage());
-        return "error.html";
+    @ExceptionHandler(ApiCustomErrorException.class)
+    public ResponseEntity<ErrorList> handleCustomErrorException(ApiCustomErrorException ex) {
+        ErrorDTO errorDTO = ErrorDTO.builder().field(ex.getField()).errorCodes(ex.getErrorCode()).build();
+        return ResponseEntity.status(ex.getHttpStatus()).body(ErrorList.builder().errorList(List.of(errorDTO)).build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

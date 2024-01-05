@@ -3,7 +3,7 @@ package pl.quiz.online_courses_quiz.service;
 import pl.quiz.online_courses_quiz.model.dto.QuestionDTO;
 import pl.quiz.online_courses_quiz.model.dto.wrapper.QuestionsDTO;
 
-public interface QuizManagementService {
+public interface QuestionManagementService {
     QuestionsDTO getQuestionListForCourse(String courseTitle);
 
     QuestionsDTO deleteQuestion(String courseTitle, String title);

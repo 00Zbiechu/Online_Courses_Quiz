@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.quiz.online_courses_quiz.model.dto.QuestionDTO;
 import pl.quiz.online_courses_quiz.model.dto.wrapper.QuestionsDTO;
-import pl.quiz.online_courses_quiz.service.QuizManagementService;
+import pl.quiz.online_courses_quiz.service.QuestionManagementService;
 import pl.quiz.online_courses_quiz.validator.QuestionValidator;
 
 
 @RestController
 @RequestMapping("/api/quiz")
 @RequiredArgsConstructor
-public class QuizManagementController {
+public class QuestionManagementController {
 
     private final QuestionValidator questionValidator;
 
@@ -31,20 +31,20 @@ public class QuizManagementController {
         binder.addValidators(questionValidator);
     }
 
-    private final QuizManagementService quizManagementService;
+    private final QuestionManagementService questionManagementService;
 
     @GetMapping("/question-list")
     public ResponseEntity<QuestionsDTO> getQuestionListForCourse(@RequestParam String courseTitle) {
-        return new ResponseEntity<>(quizManagementService.getQuestionListForCourse(courseTitle), HttpStatus.OK);
+        return new ResponseEntity<>(questionManagementService.getQuestionListForCourse(courseTitle), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-question")
     public ResponseEntity<QuestionsDTO> deleteQuestion(@RequestParam String courseTitle, @RequestParam String title) {
-        return new ResponseEntity<>(quizManagementService.deleteQuestion(courseTitle, title), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(questionManagementService.deleteQuestion(courseTitle, title), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/add-question")
     public ResponseEntity<QuestionsDTO> addQuestion(@Valid @RequestBody QuestionDTO questionDTO) {
-        return new ResponseEntity<>(quizManagementService.addQuestion(questionDTO), HttpStatus.OK);
+        return new ResponseEntity<>(questionManagementService.addQuestion(questionDTO), HttpStatus.OK);
     }
 }
