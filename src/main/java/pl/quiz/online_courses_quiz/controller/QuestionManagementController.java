@@ -20,7 +20,7 @@ import pl.quiz.online_courses_quiz.validator.QuestionValidator;
 
 
 @RestController
-@RequestMapping("/api/quiz")
+@RequestMapping("/api/question")
 @RequiredArgsConstructor
 public class QuestionManagementController {
 
