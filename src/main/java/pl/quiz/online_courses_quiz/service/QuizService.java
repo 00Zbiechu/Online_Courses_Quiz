@@ -6,7 +6,7 @@ import pl.quiz.online_courses_quiz.model.dto.wrapper.QuestionsFormDTO;
 
 public interface QuizService {
 
-    void setUserData(CourseTitleAndUsernameDTO courseTitleAndUsernameDTO);
+    void setUserData(String username, String courseTitle);
 
     QuestionsFormDTO getQuestionsForLoggedUserAndCourseTitle();
 
