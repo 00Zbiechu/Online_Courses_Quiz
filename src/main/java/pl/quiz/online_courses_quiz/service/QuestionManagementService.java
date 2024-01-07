@@ -8,5 +8,5 @@ public interface QuestionManagementService {
 
     QuestionsDTO deleteQuestion(String courseTitle, String title);
 
-    QuestionsDTO addQuestion(QuestionDTO questionDTO);
+    QuestionsDTO addQuestion(QuestionDTO questionDTO, String courseTitle);
 }

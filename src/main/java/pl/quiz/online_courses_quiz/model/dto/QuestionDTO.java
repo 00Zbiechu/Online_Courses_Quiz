@@ -44,7 +44,5 @@ public class QuestionDTO {
     @Max(value = 3, message = WRONG_FIELD_SIZE)
     private int answer;
 
-    @NotBlank(message = FIELD_REQUIRED)
-    @Size(min = 3, max = 30, message = WRONG_FIELD_SIZE)
     private String courseTitle;
 }

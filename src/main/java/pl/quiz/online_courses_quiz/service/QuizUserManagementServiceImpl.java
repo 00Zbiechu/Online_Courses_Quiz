@@ -1,11 +1,9 @@
 package pl.quiz.online_courses_quiz.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import pl.quiz.online_courses_quiz.exception.ApiCustomErrorException;
-import pl.quiz.online_courses_quiz.exception.errors.ErrorCodes;
 import pl.quiz.online_courses_quiz.mapper.QuizUserMapper;
+import pl.quiz.online_courses_quiz.model.document.QuizUserDocument;
 import pl.quiz.online_courses_quiz.model.dto.QuizUserDTO;
 import pl.quiz.online_courses_quiz.repository.QuizUserRepository;
 
@@ -19,8 +17,8 @@ public class QuizUserManagementServiceImpl implements QuizUserManagementService 
 
     @Override
     public QuizUserDTO getQuizUserResult(String username, String courseTitle) {
-        var quizUser = quizUserRepository.findByUsernameAndCourseTitle(username, courseTitle).orElseThrow(
-                () -> new ApiCustomErrorException("quizUser", ErrorCodes.ENTITY_DOES_NOT_EXIST, HttpStatus.NOT_FOUND)
+        var quizUser = quizUserRepository.findByUsernameAndCourseTitle(username, courseTitle).orElseGet(
+                () -> QuizUserDocument.builder().correctAnswer(0).wrongAnswer(0).courseTitle(courseTitle).username(username).build()
         );
         return quizUserMapper.toDTO(quizUser);
     }

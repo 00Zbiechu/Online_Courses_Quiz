@@ -2,7 +2,7 @@ package pl.quiz.online_courses_quiz.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import pl.quiz.online_courses_quiz.model.entity.QuizUserDocument;
+import pl.quiz.online_courses_quiz.model.document.QuizUserDocument;
 
 import java.util.Optional;
 

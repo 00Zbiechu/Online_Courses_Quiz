@@ -16,20 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.quiz.online_courses_quiz.model.dto.QuestionDTO;
 import pl.quiz.online_courses_quiz.model.dto.wrapper.QuestionsDTO;
 import pl.quiz.online_courses_quiz.service.QuestionManagementService;
-import pl.quiz.online_courses_quiz.validator.QuestionValidator;
 
 
 @RestController
 @RequestMapping("/api/question")
 @RequiredArgsConstructor
 public class QuestionManagementController {
-
-    private final QuestionValidator questionValidator;
-
-    @InitBinder("questionDTO")
-    public void addValidationForQuestionDTO(WebDataBinder binder) {
-        binder.addValidators(questionValidator);
-    }
 
     private final QuestionManagementService questionManagementService;
 
@@ -44,7 +36,7 @@ public class QuestionManagementController {
     }
 
     @PostMapping("/add-question")
-    public ResponseEntity<QuestionsDTO> addQuestion(@Valid @RequestBody QuestionDTO questionDTO) {
-        return new ResponseEntity<>(questionManagementService.addQuestion(questionDTO), HttpStatus.OK);
+    public ResponseEntity<QuestionsDTO> addQuestion(@Valid @RequestBody QuestionDTO questionDTO, @RequestParam String courseTitle) {
+        return new ResponseEntity<>(questionManagementService.addQuestion(questionDTO, courseTitle), HttpStatus.OK);
     }
 }

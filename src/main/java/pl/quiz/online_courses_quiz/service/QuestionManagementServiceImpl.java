@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import pl.quiz.online_courses_quiz.exception.ApiCustomErrorException;
 import pl.quiz.online_courses_quiz.exception.errors.ErrorCodes;
 import pl.quiz.online_courses_quiz.mapper.QuestionMapper;
+import pl.quiz.online_courses_quiz.model.document.QuestionDocument;
 import pl.quiz.online_courses_quiz.model.dto.QuestionDTO;
 import pl.quiz.online_courses_quiz.model.dto.wrapper.QuestionsDTO;
-import pl.quiz.online_courses_quiz.model.entity.QuestionDocument;
 import pl.quiz.online_courses_quiz.repository.QuestionRepository;
 
 import java.util.List;
@@ -37,10 +37,20 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
     }
 
     @Override
-    public QuestionsDTO addQuestion(QuestionDTO questionDTO) {
+    public QuestionsDTO addQuestion(QuestionDTO questionDTO, String courseTitle) {
+        validateIsQuestionUniqueForCourse(questionDTO, courseTitle);
         QuestionDocument questionDocument = questionMapper.toDocument(questionDTO);
+        questionDocument.setCourseTitle(courseTitle);
         var result = questionRepository.save(questionDocument);
         return getQuestionListForCourse(result.getCourseTitle());
+    }
+
+    private void validateIsQuestionUniqueForCourse(QuestionDTO questionDTO, String courseTitle) {
+        questionRepository.findByCourseTitleAndTitle(courseTitle, questionDTO.getTitle()).ifPresent(
+                questionDocument -> {
+                    throw new ApiCustomErrorException("question", ErrorCodes.ENTITY_ALREADY_EXIST, HttpStatus.BAD_REQUEST);
+                }
+        );
     }
 }
 

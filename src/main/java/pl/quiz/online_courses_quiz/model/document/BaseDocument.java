@@ -1,4 +1,4 @@
-package pl.quiz.online_courses_quiz.model.entity;
+package pl.quiz.online_courses_quiz.model.document;
 
 
 import lombok.Getter;
